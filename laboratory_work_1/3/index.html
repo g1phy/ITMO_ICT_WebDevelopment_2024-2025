@@ -57,6 +57,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_3">Как запускать</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Листинг</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../4/">Task 4</a>
@@ -107,6 +109,34 @@
     <code>bash
     http://127.0.0.1:8080/</code></li>
 </ol>
+<h2 id="_4">Листинг</h2>
+<pre><code class="language-python">import socket
+import datetime
+
+HOST = '127.0.0.1'
+PORT = 8080
+
+with open('index.html', 'r') as file:
+    html_content = file.read()
+
+response = f&quot;&quot;&quot;HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: {len(html_content)}
+
+{html_content}&quot;&quot;&quot;
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen(1)
+    print(f'Serving HTTP on port {PORT}')
+    while True:
+        conn, addr = s.accept()
+        with conn:
+            request = conn.recv(1024).decode()
+            print(request)
+            conn.sendall(response.replace('${current_time}', datetime.datetime.now().isoformat()).encode())
+            conn.close()
+</code></pre>
               
             </div>
           </div><footer>

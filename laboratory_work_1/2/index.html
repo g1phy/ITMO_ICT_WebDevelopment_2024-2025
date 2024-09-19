@@ -55,6 +55,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_3">Как запускать</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Листинг</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../3/">Task 3</a>
@@ -106,6 +108,22 @@
     <code>bash
     python tcp_client.py</code></li>
 </ol>
+<h2 id="_4">Листинг</h2>
+<pre><code class="language-python">import socket
+
+HOST = '127.0.0.1'
+PORT = 65432
+
+a = input(&quot;Enter side a: &quot;)
+b = input(&quot;Enter side b: &quot;)
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    s.sendall(f&quot;{a},{b}&quot;.encode())
+    data = s.recv(1024)
+
+print(f&quot;The length of the hypotenuse is {data.decode()}&quot;)
+</code></pre>
               
             </div>
           </div><footer>

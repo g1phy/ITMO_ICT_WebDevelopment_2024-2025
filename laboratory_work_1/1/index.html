@@ -53,6 +53,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_3">Как запускать</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Листинг</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../2/">Task 2</a>
@@ -106,6 +108,23 @@
     <code>bash
     python3 udp_client.py</code></li>
 </ol>
+<h2 id="_4">Листинг</h2>
+<pre><code class="language-python">import socket
+
+UDP_IP = &quot;127.0.0.1&quot;
+UDP_PORT = 5005
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind((UDP_IP, UDP_PORT))
+
+print(&quot;UDP server up and listening&quot;)
+
+while True:
+    data, addr = sock.recvfrom(1024)
+    print(&quot;Received message:&quot;, data.decode())
+    if data.decode() == &quot;Hello, server&quot;:
+        sock.sendto(&quot;Hello, client&quot;.encode(), addr)
+</code></pre>
               
             </div>
           </div><footer>
